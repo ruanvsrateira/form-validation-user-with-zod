@@ -1,17 +1,29 @@
-import { InputHTMLAttributes } from "react";
+import * as React from "react";
 
 import styles from "./input.module.scss";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  type: string;
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label: string;
-}
-
-export const Input = ({ label, ...restProps }: InputProps) => {
-  return (
-    <div className="input-container">
-      {label && <label className={styles["input__label"]}>{label}</label>}
-      <input {...restProps} className={styles["input__content"]} />
-    </div>
-  );
+  helperText?: string;
 };
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, helperText, ...props }, ref) => {
+    return (
+      <div>
+        <input
+          type={type}
+          className={styles["input__content"]}
+          ref={ref}
+          {...props}
+        />
+        {helperText && (
+          <span className={styles["input__helper-text"]}>{helperText}</span>
+        )}
+      </div>
+    );
+  }
+);
+Input.displayName = "Input";
+
+export { Input };
