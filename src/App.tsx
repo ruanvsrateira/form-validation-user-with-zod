@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import "./styles/global.scss";
 import { Form } from "./sections/Form/Form";
 
